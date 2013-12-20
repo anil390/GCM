@@ -13,17 +13,21 @@ import java.util.Random;
 
 import android.app.AlertDialog;
 import android.app.Application;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.PowerManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gcm.GCMRegistrar;
 
 public class Controller extends Application{
+	Controller aController = this;
 	
 	@Override
 	public boolean stopService(Intent name) {
@@ -287,8 +291,11 @@ public void showAlertDialog(Context context, String title, String message,
 
 	@Override
 	public void onCreate() {
-		// TODO Auto-generated method stub
 		super.onCreate();
+		
+		
+		registerReceiver(mHandleMessageReceiver, new IntentFilter(
+				Config.DISPLAY_MESSAGE_ACTION));
 		Intent inte = new Intent(this, UploadingService.class);
 		startService(inte);
 		Log.d("service", "service started");
@@ -297,7 +304,43 @@ public void showAlertDialog(Context context, String title, String message,
 	
 	
 	
-    
+	private final BroadcastReceiver mHandleMessageReceiver = new BroadcastReceiver() {
+		
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			
+			String newMessage = intent.getExtras().getString(Config.EXTRA_MESSAGE);
+			
+			// Waking up mobile if it is sleeping
+			aController.acquireWakeLock(getApplicationContext());
+			
+			// Display message on the screen
+			//lblMessage.append(newMessage + "\n");			
+			
+			Toast.makeText(getApplicationContext(), "Got Message: " + newMessage, Toast.LENGTH_LONG).show();
+			
+			// Releasing wake lock
+			aController.releaseWakeLock();
+		}
+	};
+	
+	protected void onDestroy() {
+		// Cancel AsyncTask
+		/*if (mRegisterTask != null) {
+			mRegisterTask.cancel(true);
+		}*/
+		try {
+			// Unregister Broadcast Receiver
+			unregisterReceiver(mHandleMessageReceiver);
+			
+			//Clear internal resources.
+			GCMRegistrar.onDestroy(this);
+			
+		} catch (Exception e) {
+			Log.e("UnRegister Receiver Error", "> " + e.getMessage());
+		}
+	//	super.onDestroy();
+	}
     
    
 }

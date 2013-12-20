@@ -1,10 +1,10 @@
 package com.anil.android.gcm;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,23 +17,26 @@ public class MainActivity extends Activity {
 
 	TextView lblMessage;
 	Controller aController;
-	
-	
 	AsyncTask<Void, Void, Void> mRegisterTask;
 	
-	public static String name;
-	public static String email;
-	//private static String phone_number;
+	//String tempRegid;
+	
+	public static String tname;
+	public static String temail;
+	public static String tphone_number;
+	public static String tdev_reg_id;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) { 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		lblMessage = (TextView) findViewById(R.id.lblMessage);
+		
 		
 		
 		// Get Global Controller Class object (see application tag in AndroidManifest.xml)
 		aController = (Controller) getApplicationContext();
-		
+		/*
 		
 		// Check if Internet present
 		if (!aController.isConnectingToInternet()) {
@@ -45,13 +48,13 @@ public class MainActivity extends Activity {
 			// stop executing code by return
 			return;
 		}
-		
+		*/
 		// Getting name, email from intent
 		Intent i = getIntent();
+		tphone_number = i .getStringExtra("phone_number");
+		tname = i.getStringExtra("name");
+		temail = i.getStringExtra("email");
 		
-		name = i.getStringExtra("name");
-		email = i.getStringExtra("email");
-		//phone_number = i .getStringExtra("phone_number");
 		
 		// Make sure the device has the proper dependencies.
 		GCMRegistrar.checkDevice(this);
@@ -59,59 +62,69 @@ public class MainActivity extends Activity {
 		// Make sure the manifest permissions was properly set 
 		GCMRegistrar.checkManifest(this);
 
-		lblMessage = (TextView) findViewById(R.id.lblMessage);
+		//lblMessage = (TextView) findViewById(R.id.lblMessage);
 		
 		// Register custom Broadcast receiver to show messages on activity
-		registerReceiver(mHandleMessageReceiver, new IntentFilter(
-				Config.DISPLAY_MESSAGE_ACTION));
+		/*registerReceiver(mHandleMessageReceiver, new IntentFilter(
+				Config.DISPLAY_MESSAGE_ACTION));*/
 		
 		// Get GCM registration id
-		final String regId = GCMRegistrar.getRegistrationId(this);
+		tdev_reg_id = GCMRegistrar.getRegistrationId(this);
+		
+		Log.d("Regi id", "your device id" + tdev_reg_id);
+		//String tempString = regId;
 		
 		//saving data to database
+
+		
+		
+		
+		
+		
+		
+		
 		
 
 		// Check if regid already presents
-		if (regId.equals("")) {
+		if (tdev_reg_id.equals("")) {
 			
 			// Register with GCM			
 			GCMRegistrar.register(this, Config.GOOGLE_SENDER_ID);
+			
 			
 		} else {
 			
 			// Device is already registered on GCM Server
 			if (GCMRegistrar.isRegisteredOnServer(this)) {
 				
+				try
+				{
+				Log.d("DbHelper", "DB class started");
+	            DbHelper DBhelper = new DbHelper(getApplicationContext());
+	            
+	            SQLiteDatabase db = DBhelper.getWritableDatabase();
+	            //put variables
+	            ContentValues values = new ContentValues();
+	            //values.put(DatabaseHelper.COLUMN_ID, 1);
+	           values.put(DbHelper.COLUMN_PHONE, tphone_number);
+	            values.put(DbHelper.COLUMN_NAME, tname);
+	            values.put(DbHelper.COLUMN_EMAIL, temail);
+	            values.put(DbHelper.COLUMN_REGID, tdev_reg_id);
 
-				/*try
-		        {
-					
-					Log.d("DbHelper", "DB class started");
-		            DbHelper DBhelper = new DbHelper(getApplicationContext());
-		            
-		            SQLiteDatabase db = DBhelper.getWritableDatabase();
-		            //put variables
-		            ContentValues values = new ContentValues();
-		            //values.put(DatabaseHelper.COLUMN_ID, 1);
-		           values.put(DbHelper.COLUMN_PHONE, 9587);
-		            values.put(DbHelper.COLUMN_NAME, name);
-		            values.put(DbHelper.COLUMN_EMAIL, email);
-		            values.put(DbHelper.COLUMN_REGID, "ertwert");
-
-		            long query = db.insert(DbHelper.TABLE_NAME, null, values);
-		            String temp = Long.toString(query);
-		            Log.d("DbHElper",temp);
-		            db.close();
-		        }
-		        catch(Exception e)
-		        {
-		          Log.d("DBHelper class " , "catch block executed");
-		          e.printStackTrace();
-		        }*/
+	            long query = db.insert(DbHelper.TABLE_NAME, null, values);
+	            String temp = Long.toString(query);
+	            Log.d("DbHElper",temp);
+	            db.close();
+	        }
+	        catch(Exception e)
+	        {
+	          Log.d("DBHelper class " , "catch block executed");
+	          e.printStackTrace();
+	        }
 				
 				
 				
-				// Skips registration.				
+							
 				Toast.makeText(getApplicationContext(), "Already registered with GCM Server", Toast.LENGTH_LONG).show();
 			
 			} else {
@@ -129,7 +142,7 @@ public class MainActivity extends Activity {
 						// Register on our server
 						// On server creates a new user
 						Log.d("background activity", "bg started");
-						aController.register(context, name, email, regId);
+						aController.register(context, tname, temail, tdev_reg_id);
 						
 						return null;
 					}
@@ -150,7 +163,7 @@ public class MainActivity extends Activity {
 
 
 	// Create a broadcast receiver to get message and show on screen 
-	private final BroadcastReceiver mHandleMessageReceiver = new BroadcastReceiver() {
+/*	private final BroadcastReceiver mHandleMessageReceiver = new BroadcastReceiver() {
 		
 		@Override
 		public void onReceive(Context context, Intent intent) {
@@ -168,7 +181,7 @@ public class MainActivity extends Activity {
 			// Releasing wake lock
 			aController.releaseWakeLock();
 		}
-	};
+	};*/
 	
 	@Override
 	protected void onDestroy() {
@@ -178,7 +191,7 @@ public class MainActivity extends Activity {
 		}
 		try {
 			// Unregister Broadcast Receiver
-			unregisterReceiver(mHandleMessageReceiver);
+			//unregisterReceiver(mHandleMessageReceiver);
 			
 			//Clear internal resources.
 			GCMRegistrar.onDestroy(this);

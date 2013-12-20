@@ -2,6 +2,9 @@ package com.anil.android.gcm;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +16,7 @@ public class RegisterActivity extends Activity {
 	// UI elements
 	EditText txtName; 
 	EditText txtEmail;
-	//EditText txtPhone;
+	EditText txtPhone;
 	Controller aController;
 	
 	// Register button
@@ -27,18 +30,19 @@ public class RegisterActivity extends Activity {
 		aController = (Controller) getApplicationContext();
 		
 		Log.d("DBcheck", "checking database");
-		/*check = checkDataBase();
+		check = checkDataBase();
 		
-		if(!check)
+		if(check)
 		{
 				Log.d("DBcheck", "database exists");
 				DbHelper DBhelper = new DbHelper(getApplicationContext());
 				Cursor cur = DBhelper.fetchRegid();
 				cur.moveToFirst();
-				String id = cur.getString( cur.getColumnIndexOrThrow("email")); // id is first column in db
-				Log.d("cursor", "cursor returned" + id);
+				String id = cur.getString( cur.getColumnIndexOrThrow("email")); 
+				String did = cur.getString( cur.getColumnIndexOrThrow("dev_reg_id"));// id is first column in db
+				Log.d("cursor", "cursor returned" + id  + did);
 				
-			*/    	/*       
+/*
 
 			        cur.moveToFirst();
 
@@ -53,11 +57,11 @@ public class RegisterActivity extends Activity {
 			        }while (cur.moveToNext());*/
 				
 				//SQLiteDatabase db = SQLiteDatabase.openDatabase(Config.DB_PATH + Config.DB_NAME, null, 0);
-		/*		Intent inew = new Intent(getApplicationContext(), MainActivity.class);
+			Intent inew = new Intent(getApplicationContext(), HomeScreen.class);
 				startActivity(inew);
 			
 		}
-		else{*/
+		else{
 			Log.d("DBcheck", "database does not exists");	
 		setContentView(R.layout.activity_register);
 		
@@ -76,7 +80,7 @@ public class RegisterActivity extends Activity {
 			return;
 		}
 
-		// Check if GCM configuration is set
+	/*	// Check if GCM configuration is set
 		if (Config.YOUR_SERVER_URL == null || Config.GOOGLE_SENDER_ID == null || Config.YOUR_SERVER_URL.length() == 0
 				|| Config.GOOGLE_SENDER_ID.length() == 0) {
 			
@@ -86,11 +90,13 @@ public class RegisterActivity extends Activity {
 			
 			// stop executing code by return
 			 return;
-		}
+			 }
+			 */
+		
 		
 		txtName = (EditText) findViewById(R.id.txtName);
 		txtEmail = (EditText) findViewById(R.id.txtEmail);
-		//txtPhone = (EditText) findViewById(R.id.txtNum);
+		txtPhone = (EditText) findViewById(R.id.txtNum);
 		btnRegister = (Button) findViewById(R.id.btnRegister);
 		
 		// Click event on Register button
@@ -99,21 +105,19 @@ public class RegisterActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {  
 				// Get data from EditText 
-				String name = txtName.getText().toString(); 
-				String email = txtEmail.getText().toString();
-				//String phone_number = txtPhone.getText().toString();
+				String mname = txtName.getText().toString(); 
+				String memail = txtEmail.getText().toString();
+				String mphone_number = txtPhone.getText().toString();
 				
 				// Check if user filled the form
-				if(name.trim().length() > 0 && email.trim().length() > 0){
+				if(mname.trim().length() > 0 && memail.trim().length() > 0){
 					
 					// Launch Main Activity
 					Intent i = new Intent(getApplicationContext(), MainActivity.class);
+					i.putExtra("phone_number", mphone_number);
+					i.putExtra("name", mname);
+					i.putExtra("email", memail);
 					
-					// Registering user on our server					
-					// Sending registraiton details to MainActivity
-					i.putExtra("name", name);
-					i.putExtra("email", email);
-					//i.putExtra("phone_number", phone_number);
 					startActivity(i);
 					finish();
 					
@@ -125,9 +129,10 @@ public class RegisterActivity extends Activity {
 			}
 		});
 		}
+	}
 	
 	
-	/* private boolean checkDataBase(){
+	 private boolean checkDataBase(){
 		 
 		 SQLiteDatabase checkDB = null;
 		  
@@ -149,7 +154,7 @@ public class RegisterActivity extends Activity {
 		  
 		 return checkDB != null ? true : false;
 		 }
-	*/
+	
 	
 	
 

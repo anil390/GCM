@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.BaseColumns;
 import android.util.Log;
 
 public class DbHelper extends SQLiteOpenHelper {
@@ -19,7 +18,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "gcm_demo.db";
     private static final int DATABASE_VERSION = 1;
 
-    private static final String DATABASE_CREATE = "create table " + TABLE_NAME + " ( " + BaseColumns._ID + " integer primary key autoincrement, "+ COLUMN_NAME +" text not null, "+ COLUMN_EMAIL+" text not null);";
+    private static final String DATABASE_CREATE = "create table " + TABLE_NAME + " ( " + COLUMN_PHONE  + " integer primary key , " + COLUMN_NAME +" text not null, "+ COLUMN_EMAIL+" text not null, "+ COLUMN_REGID + " text);";
    // private static final String DATABASE_SELECT = "select * from token";
     public DbHelper(Context context) 
     {
@@ -29,7 +28,7 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) 
     {
-    	Log.d("DbHelper", "data base helper class started");
+    	Log.d("DbHelper", "data base helper class started" +DATABASE_CREATE);
 
         db.execSQL(DATABASE_CREATE);
     }
@@ -47,9 +46,10 @@ public class DbHelper extends SQLiteOpenHelper {
     public Cursor fetchRegid()
 
     {
+    	Log.d("fetching", "fetchRegiID called");
     	SQLiteDatabase db = this.getReadableDatabase();
 
-              return db.query(TABLE_NAME, new String[] { COLUMN_NAME, COLUMN_EMAIL,}, null, null, null,null, null);                                                                        
+              return db.query(TABLE_NAME, new String[] { COLUMN_PHONE,COLUMN_NAME, COLUMN_EMAIL,COLUMN_REGID}, null, null, null,null, null);                                                                        
 
     }
     
