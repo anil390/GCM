@@ -29,25 +29,39 @@ public final class R {
         public static final int success=0x7f020004;
     }
     public static final class id {
-        public static final int btnRegister=0x7f070004;
-        public static final int button1=0x7f070005;
-        public static final int editText1=0x7f070006;
+        public static final int MeetingHostET=0x7f07000b;
+        public static final int MeetingInviteET=0x7f070009;
+        public static final int btnRegister=0x7f070005;
+        public static final int create_meetingBT=0x7f070001;
+        public static final int datePickerBT=0x7f07000d;
+        public static final int editText1=0x7f070011;
         public static final int lblMessage=0x7f070000;
-        public static final int lblMessage1=0x7f070007;
-        public static final int txtEmail=0x7f070003;
-        public static final int txtName=0x7f070002;
-        public static final int txtNum=0x7f070001;
+        public static final int lblMessage1=0x7f070012;
+        public static final int meetingCreated=0x7f070010;
+        public static final int meetingLocationET=0x7f070007;
+        public static final int textView1=0x7f070006;
+        public static final int textView2=0x7f07000a;
+        public static final int textView3=0x7f07000c;
+        public static final int textView4=0x7f07000e;
+        public static final int textView5=0x7f070008;
+        public static final int timePickerBT=0x7f07000f;
+        public static final int txtEmail=0x7f070004;
+        public static final int txtName=0x7f070003;
+        public static final int txtNum=0x7f070002;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int activity_register=0x7f030001;
-        public static final int message=0x7f030002;
-        public static final int screen_home=0x7f030003;
+        public static final int created_meeting=0x7f030002;
+        public static final int meeting_created=0x7f030003;
+        public static final int message=0x7f030004;
+        public static final int screen_home=0x7f030005;
     }
     public static final class string {
         public static final int RegisterBT=0x7f050016;
         public static final int already_registered=0x7f050005;
         public static final int app_name=0x7f050000;
+        public static final int create_meeting_text=0x7f05001a;
         public static final int email_hint=0x7f050017;
         public static final int error_config=0x7f050004;
         public static final int gcm_deleted=0x7f05000b;
@@ -58,6 +72,15 @@ public final class R {
         public static final int gcm_unregistered=0x7f050007;
         public static final int hello_world=0x7f050001;
         public static final int image_hint=0x7f050018;
+        public static final int meeting_date=0x7f050020;
+        public static final int meeting_date_hint=0x7f050021;
+        public static final int meeting_host=0x7f05001c;
+        public static final int meeting_host_hint=0x7f05001d;
+        public static final int meeting_invite=0x7f050022;
+        public static final int meeting_invite_hint=0x7f050023;
+        public static final int meeting_location=0x7f05001b;
+        public static final int meeting_time=0x7f05001e;
+        public static final int meeting_time_hint=0x7f05001f;
         public static final int menu_settings=0x7f050002;
         public static final int name_hint=0x7f050015;
         public static final int number_hint=0x7f050019;

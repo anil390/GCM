@@ -2,7 +2,6 @@ package com.anil.android.gcm;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
@@ -35,13 +34,13 @@ public class RegisterActivity extends Activity {
 		if(check)
 		{
 				Log.d("DBcheck", "database exists");
-				DbHelper DBhelper = new DbHelper(getApplicationContext());
+				/*DbHelper DBhelper = new DbHelper(getApplicationContext());
 				Cursor cur = DBhelper.fetchRegid();
 				cur.moveToFirst();
 				String id = cur.getString( cur.getColumnIndexOrThrow("email")); 
 				String did = cur.getString( cur.getColumnIndexOrThrow("dev_reg_id"));// id is first column in db
 				Log.d("cursor", "cursor returned" + id  + did);
-				
+				*/
 /*
 
 			        cur.moveToFirst();
@@ -57,7 +56,7 @@ public class RegisterActivity extends Activity {
 			        }while (cur.moveToNext());*/
 				
 				//SQLiteDatabase db = SQLiteDatabase.openDatabase(Config.DB_PATH + Config.DB_NAME, null, 0);
-			Intent inew = new Intent(getApplicationContext(), HomeScreen.class);
+			Intent inew = new Intent(getApplicationContext(), MainActivity.class);
 				startActivity(inew);
 			
 		}

@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +21,7 @@ public class MainActivity extends Activity {
 	TextView lblMessage;
 	Controller aController;
 	AsyncTask<Void, Void, Void> mRegisterTask;
+	Button lCreateButton;
 	
 	//String tempRegid;
 	
@@ -30,6 +34,17 @@ public class MainActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) { 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		lCreateButton = (Button) findViewById(R.id.create_meetingBT);
+		lCreateButton = (Button) findViewById(R.id.create_meetingBT);
+		lCreateButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getApplicationContext(), CreateMeeting.class);
+				startActivity(i);
+				
+			}
+		});
 		lblMessage = (TextView) findViewById(R.id.lblMessage);
 		
 		

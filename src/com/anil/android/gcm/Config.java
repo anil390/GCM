@@ -6,6 +6,7 @@ public interface Config {
 	// CONSTANTS
 	static final String YOUR_SERVER_URL =  "http://www.abcd.co.in/gcmdemo/register.php";
 	static final String UPLOAD_LOCATION = "http://www.abcd.co.in/gcmdemo/uploadlocation.php";
+	static final String MEETING_CREATE_LOCATION = "http://www.abcd.co.in/gcmdemo/meetingcreation.php";
 	// YOUR_SERVER_URL : Server url where you have placed your server files
 	
 	 static final  String DB_PATH = "/data/data/com.anil.android.gcm/databases/";

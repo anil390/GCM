@@ -31,14 +31,32 @@ public class Controller extends Application{
 	
 	@Override
 	public boolean stopService(Intent name) {
-		// TODO Auto-generated method stub
+		
 		return super.stopService(name);
 	}
 
 	private  final int MAX_ATTEMPTS = 5;
     private  final int BACKOFF_MILLI_SECONDS = 2000;
     private  final Random random = new Random();
-	
+	//creating meeting
+    void createMeeting(final Context context, String eregId,  String host, String location, String invitee, String date, String time){
+    
+    	
+    	 Map<String, String> params = new HashMap<String, String>();
+         params.put("regId", eregId);
+         params.put("host", host);
+         params.put("location", location);
+         params.put("invitee", invitee);
+         params.put("date", date);
+         params.put("time", time);
+         try {
+        	 Log.d("meeting", "posting meeting on server");
+			post("http://www.abcd.co.in/gcmdemo/meetingcreation.php", params);
+		} catch (IOException e) {
+			Log.d("posting", "catch block executed");
+			e.printStackTrace();
+		}
+    }
     
 	 // Register this account with the server.
     void register(final Context context, String name, String email, final String regId) {
@@ -196,7 +214,8 @@ public class Controller extends Application{
             // handle the response
             Log.d("Handlingresponse", "handling response device ");
             int status = conn.getResponseCode();
-            
+            String tmp = Integer.toString(status);
+            Log.d("Handlingresponse", tmp);	
             // If response is not success
             if (status != 200) {
             	
