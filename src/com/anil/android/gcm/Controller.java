@@ -18,9 +18,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.PowerManager;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -39,16 +42,18 @@ public class Controller extends Application{
     private  final int BACKOFF_MILLI_SECONDS = 2000;
     private  final Random random = new Random();
 	//creating meeting
-    void createMeeting(final Context context, String eregId,  String host, String location, String invitee, String date, String time){
+    void createMeeting(final Context context, String reg_Id,  String host, String location, String invitee, String date, String time){
     
-    	
+    	Log.d("Controller ", reg_Id);
     	 Map<String, String> params = new HashMap<String, String>();
-         params.put("regId", eregId);
-         params.put("host", host);
+    	 params.put("time", time);
+    	 params.put("date", date);
+    	 //params.put("invitee", invitee);
          params.put("location", location);
-         params.put("invitee", invitee);
-         params.put("date", date);
-         params.put("time", time);
+         params.put("host", host);
+         params.put("regId", reg_Id);
+         
+        
          try {
         	 Log.d("meeting", "posting meeting on server");
 			post("http://www.abcd.co.in/gcmdemo/meetingcreation.php", params);
@@ -59,13 +64,21 @@ public class Controller extends Application{
     }
     
 	 // Register this account with the server.
-    void register(final Context context, String name, String email, final String regId) {
-    	Log.d("registering", "register function called");
-        Log.i(Config.TAG, "registering device (regId = " + regId + ")");
+    void register(final Context context, String mobile, String name, String email, final String regId) {
+    	SharedPreferences sharedPreferences = PreferenceManager
+    				                .getDefaultSharedPreferences(this);
+    				        Editor editor = sharedPreferences.edit();
+    				        editor.putString("Mobile", mobile);
+    				        editor.putString("Email", email);
+    				        editor.putString("Name", name);
+    				        editor.putString("Registration_Id", regId);
+    				        editor.putBoolean("is_registered", true);
+    				        editor.commit();
         
        // String serverUrl = Config.YOUR_SERVER_URL;
         
         Map<String, String> params = new HashMap<String, String>();
+        params.put("mobile", mobile);
         params.put("regId", regId);
         params.put("name", name);
         params.put("email", email);

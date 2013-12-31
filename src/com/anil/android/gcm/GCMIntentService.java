@@ -29,11 +29,11 @@ public class GCMIntentService extends GCMBaseIntentService {
     	//Get Global Controller Class object (see application tag in AndroidManifest.xml)
     	if(aController == null)
            aController = (Controller) getApplicationContext();
-    	
+    		
         Log.i(TAG, "Device registered: regId = " + registrationId);
         aController.displayMessageOnScreen(context, "Your device registred with GCM");
         Log.d("NAME", MainActivity.tname);
-        aController.register(context, MainActivity.tname, MainActivity.temail, registrationId);
+        aController.register(context,MainActivity.tphone_number, MainActivity.tname, MainActivity.temail, registrationId);
     }
 
     /**

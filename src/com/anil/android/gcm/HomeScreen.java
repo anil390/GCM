@@ -1,6 +1,4 @@
 package com.anil.android.gcm;
-import com.google.android.gcm.GCMRegistrar;
-
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,7 +7,9 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast; 
+import android.widget.Toast;
+
+import com.google.android.gcm.GCMRegistrar;
 
 public class HomeScreen extends Activity {
 	Controller aController;

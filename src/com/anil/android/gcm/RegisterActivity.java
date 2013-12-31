@@ -2,10 +2,7 @@ package com.anil.android.gcm;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,15 +22,60 @@ public class RegisterActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		aController = (Controller) getApplicationContext();
+		setContentView(R.layout.activity_register);
+			if (!aController.isConnectingToInternet()) {
+	
+					aController.showAlertDialog(RegisterActivity.this,
+					"Internet Connection Error",
+					"Please connect to working Internet connection", false);
+					// stop executing code by return
+					return;
+			}
+
+			txtName = (EditText) findViewById(R.id.txtName);
+			txtEmail = (EditText) findViewById(R.id.txtEmail);
+			txtPhone = (EditText) findViewById(R.id.txtNum);
+			btnRegister = (Button) findViewById(R.id.btnRegister);
+
+			btnRegister.setOnClickListener(new View.OnClickListener() {
+	
+	@Override
+	public void onClick(View arg0) {  
+		String mphone_number = txtPhone.getText().toString();
 		
+		String mname = txtName.getText().toString(); 
+		String memail = txtEmail.getText().toString();
+	
+		
+		// Check if user filled the form
+				if(mphone_number.trim().length() > 0 && mname.trim().length() > 0 && memail.trim().length() > 0){
+			
+						// Launch Main Activity
+						Intent i = new Intent(getApplicationContext(), MainActivity.class);
+						i.putExtra("phone_number", mphone_number);
+						i.putExtra("name", mname);
+						i.putExtra("email", memail);
+						
+						startActivity(i);
+						finish();
+			
+				}else{
+			
+						// user doen't filled that data
+						aController.showAlertDialog(RegisterActivity.this, "Registration Error!", "Please enter your details", false);
+					}
+				}
+			});
+		}
+}
+		/*
 		Log.d("DBcheck", "checking database");
 		check = checkDataBase();
 		
 		if(check)
 		{
-				Log.d("DBcheck", "database exists");
+				Log.d("DBcheck", "database exists");*/
 				/*DbHelper DBhelper = new DbHelper(getApplicationContext());
 				Cursor cur = DBhelper.fetchRegid();
 				cur.moveToFirst();
@@ -55,29 +97,20 @@ public class RegisterActivity extends Activity {
 
 			        }while (cur.moveToNext());*/
 				
-				//SQLiteDatabase db = SQLiteDatabase.openDatabase(Config.DB_PATH + Config.DB_NAME, null, 0);
+		/*		//SQLiteDatabase db = SQLiteDatabase.openDatabase(Config.DB_PATH + Config.DB_NAME, null, 0);
 			Intent inew = new Intent(getApplicationContext(), MainActivity.class);
 				startActivity(inew);
 			
 		}
-		else{
-			Log.d("DBcheck", "database does not exists");	
-		setContentView(R.layout.activity_register);
+		else{*/
+			/*Log.d("DBcheck", "database does not exists");*/	
+		
 		
 		//Get Global Controller Class object (see application tag in AndroidManifest.xml)
-		final Controller aController = (Controller) getApplicationContext();
+		
 		
 		// Check if Internet Connection present
-		if (!aController.isConnectingToInternet()) {
-			
-			// Internet Connection is not present
-			aController.showAlertDialog(RegisterActivity.this,
-					"Internet Connection Error",
-					"Please connect to working Internet connection", false);
-			
-			// stop executing code by return
-			return;
-		}
+	
 
 	/*	// Check if GCM configuration is set
 		if (Config.YOUR_SERVER_URL == null || Config.GOOGLE_SENDER_ID == null || Config.YOUR_SERVER_URL.length() == 0
@@ -93,45 +126,14 @@ public class RegisterActivity extends Activity {
 			 */
 		
 		
-		txtName = (EditText) findViewById(R.id.txtName);
-		txtEmail = (EditText) findViewById(R.id.txtEmail);
-		txtPhone = (EditText) findViewById(R.id.txtNum);
-		btnRegister = (Button) findViewById(R.id.btnRegister);
+	
 		
 		// Click event on Register button
-		btnRegister.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {  
-				// Get data from EditText 
-				String mname = txtName.getText().toString(); 
-				String memail = txtEmail.getText().toString();
-				String mphone_number = txtPhone.getText().toString();
-				
-				// Check if user filled the form
-				if(mname.trim().length() > 0 && memail.trim().length() > 0){
-					
-					// Launch Main Activity
-					Intent i = new Intent(getApplicationContext(), MainActivity.class);
-					i.putExtra("phone_number", mphone_number);
-					i.putExtra("name", mname);
-					i.putExtra("email", memail);
-					
-					startActivity(i);
-					finish();
-					
-				}else{
-					
-					// user doen't filled that data
-					aController.showAlertDialog(RegisterActivity.this, "Registration Error!", "Please enter your details", false);
-				}
-			}
-		});
-		}
-	}
+
+
 	
 	
-	 private boolean checkDataBase(){
+	/* private boolean checkDataBase(){
 		 
 		 SQLiteDatabase checkDB = null;
 		  
@@ -152,9 +154,9 @@ public class RegisterActivity extends Activity {
 		 }
 		  
 		 return checkDB != null ? true : false;
-		 }
+		 }*/
 	
 	
 	
 
-}
+

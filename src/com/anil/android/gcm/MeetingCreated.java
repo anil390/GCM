@@ -1,7 +1,5 @@
 package com.anil.android.gcm;
 
-import com.google.android.gcm.GCMRegistrar;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -13,26 +11,28 @@ public class MeetingCreated extends Activity {
 	Controller aController;
 	
 	AsyncTask<Void, Void, Void> mMeetingCreationTask;
-	public static String host;
-	public static String location;
-	public static String invitee;
-	public static String date;
-	public static String time;
+	public static String mhost;
+	public static String mlocation;
+	public static String minvitee;
+	public static String mdate;
+	public static String mtime;
 	
-	public static String reg_id;
+	private static String mreg_id;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.meeting_created);
 		aController = (Controller) getApplicationContext();
+		setContentView(R.layout.created_meeting);
+		
 		Intent i = getIntent();
-		host = i.getStringExtra("host");
-		location = i.getStringExtra("location");
-		invitee = i.getStringExtra("invitee");
-		date = i.getStringExtra("date");
-		time = i.getStringExtra("time");
-		reg_id = GCMRegistrar.getRegistrationId(this);
+		mreg_id =i.getStringExtra("reg_id");
+		mhost = i.getStringExtra("host");
+		mlocation = i.getStringExtra("location");
+		minvitee = i.getStringExtra("invitee");
+		mdate = i.getStringExtra("date");
+		mtime = i.getStringExtra("time");
+		Log.d("MeetingCreated", mreg_id+mhost+mlocation+minvitee+mdate+mtime);
 		
 		final Context context = this;
 		mMeetingCreationTask = new AsyncTask<Void, Void, Void>() {
@@ -43,34 +43,27 @@ public class MeetingCreated extends Activity {
 				// Register on our server
 				// On server creates a new user
 				Log.d("background activity", "bg started");
-				aController.createMeeting(context, reg_id, host, location, invitee, date, time);
+				aController.createMeeting(context, mreg_id, mhost, mlocation, minvitee, mdate, mtime);
 				
 				return null;
 			}
 
 			@Override
 			protected void onPostExecute(Void result) {
-				Log.d("background activity", "bg end");
+				Log.d("Meeting created", "created meeting");
 				mMeetingCreationTask = null;
 			}
 
 		};
 		
-		// execute AsyncTask
+		
 		mMeetingCreationTask.execute(null, null, null);
-		
-		
-		
-		
-		
-		
-		
 	}
 	
 	
 	@Override
 	protected void onDestroy() {
-		// TODO Auto-generated method stub
+		
 		super.onDestroy();
 	}
 	

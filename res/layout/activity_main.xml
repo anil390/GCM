@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#ffffff" >    
+    android:background="@drawable/bg2"
+    android:orientation="vertical" >
      
      <TextView android:id="@+id/lblMessage" 
          android:layout_width="fill_parent"
@@ -13,11 +13,11 @@
          android:textColor="#000000"/>
 
      <Button
-         android:id="@+id/create_meetingBT"
+         android:id="@+id/goto_dashboard"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:layout_gravity="center_vertical|center_horizontal"
-         android:text="@string/create_meeting_text"
+         android:text="Got to your Dashboard"
          android:textColor="#000000" />
 
 </LinearLayout>

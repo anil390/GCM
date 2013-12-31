@@ -36,5 +36,10 @@
     <string name="meeting_date_hint">Select Meeting Date</string>
      <string name="meeting_invite">Invitee</string>
     <string name="meeting_invite_hint">Enter Invitiee Number</string>
+    <string name="action_search">Search</string>
+    <string name="action_location">Location</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_help">Help</string>
+    <string name="action_check_updates">Check Updates</string>
 
 </resources>
