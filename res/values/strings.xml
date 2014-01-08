@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">GCM Android Example</string>
+    <string name="app_name">Visitor Tracker</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">Android Push Notifications</string>
@@ -41,5 +41,6 @@
     <string name="action_refresh">Refresh</string>
     <string name="action_help">Help</string>
     <string name="action_check_updates">Check Updates</string>
+    <string name="meeting_subject">Subject</string>
 
 </resources>

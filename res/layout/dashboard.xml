@@ -32,7 +32,19 @@
          android:layout_gravity="center_horizontal"
         android:text="View Meetings"
         android:layout_marginLeft="50dip"
+        android:layout_marginBottom="30dip"
         android:layout_marginRight="50dip"
            android:background="#993366"/>
+     <Button
+        android:id="@+id/displaylocationBT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        
+        android:background="#333366"
+        android:layout_marginLeft="50dip"
+        android:layout_marginRight="50dip"
+        android:text="Display My Location" />
+    
 
 </LinearLayout>

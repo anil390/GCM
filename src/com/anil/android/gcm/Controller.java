@@ -1,6 +1,9 @@
 package com.anil.android.gcm;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -10,6 +13,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.AlertDialog;
 import android.app.Application;
@@ -42,13 +50,13 @@ public class Controller extends Application{
     private  final int BACKOFF_MILLI_SECONDS = 2000;
     private  final Random random = new Random();
 	//creating meeting
-    void createMeeting(final Context context, String reg_Id,  String host, String location, String invitee, String date, String time){
+    void createMeeting(final Context context, String reg_Id,  String host, String location, String subject, String date, String time){
     
     	Log.d("Controller ", reg_Id);
     	 Map<String, String> params = new HashMap<String, String>();
     	 params.put("time", time);
     	 params.put("date", date);
-    	 //params.put("invitee", invitee);
+    	 params.put("subject", subject);
          params.put("location", location);
          params.put("host", host);
          params.put("regId", reg_Id);
@@ -373,6 +381,7 @@ public void showAlertDialog(Context context, String title, String message,
 		}
 	//	super.onDestroy();
 	}
+
     
    
 }

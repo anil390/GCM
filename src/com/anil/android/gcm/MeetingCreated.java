@@ -14,6 +14,7 @@ public class MeetingCreated extends Activity {
 	public static String mhost;
 	public static String mlocation;
 	public static String minvitee;
+	public static String mSubject;
 	public static String mdate;
 	public static String mtime;
 	
@@ -28,11 +29,12 @@ public class MeetingCreated extends Activity {
 		Intent i = getIntent();
 		mreg_id =i.getStringExtra("reg_id");
 		mhost = i.getStringExtra("host");
+		mSubject = i.getStringExtra("subject");
 		mlocation = i.getStringExtra("location");
-		minvitee = i.getStringExtra("invitee");
+		//minvitee = i.getStringExtra("invitee");
 		mdate = i.getStringExtra("date");
 		mtime = i.getStringExtra("time");
-		Log.d("MeetingCreated", mreg_id+mhost+mlocation+minvitee+mdate+mtime);
+		Log.d("MeetingCreated", mreg_id+mhost+mSubject+mlocation+mdate+mtime);
 		
 		final Context context = this;
 		mMeetingCreationTask = new AsyncTask<Void, Void, Void>() {
@@ -43,7 +45,7 @@ public class MeetingCreated extends Activity {
 				// Register on our server
 				// On server creates a new user
 				Log.d("background activity", "bg started");
-				aController.createMeeting(context, mreg_id, mhost, mlocation, minvitee, mdate, mtime);
+				aController.createMeeting(context, mreg_id, mhost, mlocation, mSubject, mdate, mtime);
 				
 				return null;
 			}

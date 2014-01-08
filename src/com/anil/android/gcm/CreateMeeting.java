@@ -35,6 +35,7 @@ public class CreateMeeting extends Activity {
 	    public Button tTimeET;
 	    public EditText tinviteET;
 	    public Button contactPickerBT;
+	    public EditText tSubjectET;
 	   
 	    
 	    private int hour;
@@ -59,6 +60,7 @@ public class CreateMeeting extends Activity {
 	        btnDatePicker = (Button) findViewById(R.id.datePickerBT);
 	        btnMeetingCreated = (Button) findViewById(R.id.meetingCreated);
 	        contactPickerBT = (Button) findViewById(R.id.contact_picker);
+	       
 	        contactPickerBT.setOnClickListener(new OnClickListener() {
 				
 				@Override
@@ -81,15 +83,16 @@ public class CreateMeeting extends Activity {
 				public void onClick(View v) {
 					tLocationET = (EditText) findViewById(R.id.meetingLocationET);
 					/*tHostET = (EditText) findViewById(R.id.MeetingHostET);*/
-					tinviteET = (EditText) findViewById(R.id.MeetingInviteET);
+					//tinviteET = (EditText) findViewById(R.id.MeetingInviteET);
 					tDateET = (Button) findViewById(R.id.datePickerBT);
 					tTimeET = (Button) findViewById(R.id.timePickerBT);
-					
+					 tSubjectET = (EditText) findViewById(R.id.subjectEt);
 					String tLocation = tLocationET.getText().toString();
 					//String tHost = tHostET.getText().toString();
-					String tInvitee = tinviteET.getText().toString();
+					//String tInvitee = tinviteET.getText().toString();
 					String tDate = tDateET.getText().toString();
 					String tTime = tTimeET.getText().toString();
+					String tSubject = tSubjectET.getText().toString();
 					SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(aController);
 					
 					host = sharedPreferences.getString("Mobile", null);
@@ -99,12 +102,12 @@ public class CreateMeeting extends Activity {
 			
 					i.putExtra("reg_id", reg_id);
 					i.putExtra("host", host);
-					
+					i.putExtra("subject", tSubject);
 					i.putExtra("location", tLocation);
-					i.putExtra("invitee", tInvitee);
+					//i.putExtra("invitee", tInvitee);
 					i.putExtra("date", tDate);
 					i.putExtra("time", tTime);
-					Log.d("Meeting", reg_id+host+tLocation+tInvitee+tDate+tTime);
+					Log.d("Meeting", reg_id+host+tSubject+tLocation+tDate+tTime);
 					startActivity(i);
 					finish();
 					

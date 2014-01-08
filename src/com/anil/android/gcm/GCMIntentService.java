@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
@@ -63,7 +64,7 @@ public class GCMIntentService extends GCMBaseIntentService {
          
         aController.displayMessageOnScreen(context, message);
         // notifies user
-        generateNotification(context, message);
+        generateNotification(context, message,aController);
     }
 
     /**
@@ -79,7 +80,7 @@ public class GCMIntentService extends GCMBaseIntentService {
         String message = getString(R.string.gcm_deleted, total);
         aController.displayMessageOnScreen(context, message);
         // notifies user
-        generateNotification(context, message);
+        generateNotification(context, message,aController);
     }
 
     /**
@@ -112,23 +113,59 @@ public class GCMIntentService extends GCMBaseIntentService {
      * Create a notification to inform the user that server has sent a message.
      */
     
-    private static void generateNotification(Context context, String message) {
-      //  int icon = R.drawable.ic_launcher;
-       // long when = System.currentTimeMillis();
-        NotificationCompat.Builder builder =  
+    protected static void generateNotification(Context context, String message,Controller aController) {
+    	 
+    	 Log.i("Start", "notification");
+
+         /* Invoking the default notification service */
+         NotificationCompat.Builder  mBuilder = 
+         new NotificationCompat.Builder(context);	
+
+         mBuilder.setContentTitle("New Message");
+         mBuilder.setContentText("You've received new message.");
+         mBuilder.setTicker("New Message Alert!");
+         mBuilder.setSmallIcon(R.drawable.ic_launcher);
+
+         /* Increase notification number every time a new notification arrives */
+        
+         
+         /* Creates an explicit intent for an Activity in your app */
+         Intent resultIntent = new Intent(aController, CreateMeeting.class);
+         resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+         stackBuilder.addParentStack(CreateMeeting.class);
+
+         /* Adds the Intent that starts the Activity to the top of the stack */
+         stackBuilder.addNextIntent(resultIntent);
+         PendingIntent resultPendingIntent =
+            stackBuilder.getPendingIntent(
+               0,
+               PendingIntent.FLAG_UPDATE_CURRENT
+            );
+
+         mBuilder.setContentIntent(resultPendingIntent);
+
+         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);  
+         manager.notify(0, mBuilder.build()); 
+      }
+    	
+    	
+      
+       /* NotificationCompat.Builder builder =  
                 new NotificationCompat.Builder(context)  
                 .setSmallIcon(R.drawable.ic_launcher)  
                 .setContentTitle("Notifications")  
-                .setContentText(message);  
+                .setContentText("hello there");  
 
-        Intent notificationIntent = new Intent(context, MainActivity.class);  
+        Intent notificationIntent = new Intent(context, CreateMeeting.class);  
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent,   
                 PendingIntent.FLAG_UPDATE_CURRENT);  
         builder.setContentIntent(contentIntent);  
 
         // Add as notification  
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);  
-        manager.notify(0, builder.build());  
+        manager.notify(0, builder.build());  */
     }  
      
          /*   NotificationCompat.Builder builder =  
@@ -146,7 +183,6 @@ public class GCMIntentService extends GCMBaseIntentService {
             NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);  
             manager.notify(0, builder.build());  */
          
-}
        /* NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder mBuilder =

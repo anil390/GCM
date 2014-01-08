@@ -23,6 +23,7 @@ public class Dashboard extends Activity {
 	Controller aController;
 	Button createMeeting;
 	Button viewMeeting;
+	Button displayLocation;
 	TextView wellcomeTV;
 	
 	@Override
@@ -46,6 +47,7 @@ public class Dashboard extends Activity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 		createMeeting = (Button) findViewById(R.id.createMeetingBT);
 		viewMeeting = (Button) findViewById(R.id.viewMeetingsBT);
+		displayLocation = (Button) findViewById(R.id.displaylocationBT);
 		wellcomeTV = (TextView) findViewById(R.id.welcome);
 		wellcomeTV.setText("Welcome Again Anil !");
 		createMeeting.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +64,15 @@ public class Dashboard extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent in = new Intent(getApplicationContext(),DisplayMeeting.class);
+				startActivity(in);
+				
+			}
+		});
+displayLocation.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent in = new Intent(getApplicationContext(),DisplayMyLocation.class);
 				startActivity(in);
 				
 			}
