@@ -1,5 +1,7 @@
 package com.anil.android.gcm;
 
+import java.util.Calendar;
+
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -143,16 +145,23 @@ public class CreateMeeting extends Activity {
 	        protected Dialog onCreateDialog(int id) {
 	            switch (id) {
 	            case TIME_DIALOG_ID:
-	                
+	            	final Calendar c = Calendar.getInstance();
+	                int hour = c.get(Calendar.HOUR_OF_DAY);
+	                int minute = c.get(Calendar.MINUTE);
+
 	                return new TimePickerDialog(this, timePickerListener, hour, minute,
 	                        false);
 	     
 	         
 	            
 	        case DATE_DIALOG_ID:
-                
+	        	 final Calendar c1 = Calendar.getInstance();
+	             int year = c1.get(Calendar.YEAR);
+	             int month = c1.get(Calendar.MONTH);
+	             int day = c1.get(Calendar.DAY_OF_MONTH);
+
                 // set time picker as current time
-                return new DatePickerDialog(this, datePickerListener, tempyear, month, day);
+                return new DatePickerDialog(this, datePickerListener, year, month, day);
      
             }
 	            return null;
@@ -184,8 +193,8 @@ public class CreateMeeting extends Activity {
 					month = monthOfYear;
 					tempyear = year;
 				
-				 btnDatePicker.setText(new StringBuilder().append(utilTime(day))
-		                    .append("/").append(utilTime(month)).append("/").append(utilTime(tempyear)));
+				 btnDatePicker.setText(new StringBuilder().append(utilTime(tempyear))
+		                    .append("-").append(utilTime(month)).append("-").append(utilTime(day)));
 				
 			}
 	 

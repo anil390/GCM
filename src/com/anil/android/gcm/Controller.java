@@ -1,9 +1,6 @@
 package com.anil.android.gcm;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -13,11 +10,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.AlertDialog;
 import android.app.Application;
@@ -284,30 +276,24 @@ public class Controller extends Application{
     
     
    //Function to display simple Alert Dialog
-   @SuppressWarnings("deprecation")
+   
 public void showAlertDialog(Context context, String title, String message,
 			Boolean status) {
-		AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-
-		// Set Dialog Title
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
 		alertDialog.setTitle(title);
-
-		// Set Dialog Message
 		alertDialog.setMessage(message);
 
-		if(status != null)
-			// Set alert dialog icon
-			alertDialog.setIcon((status) ? R.drawable.success : R.drawable.fail);
-
-		// Set OK Button
-		alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+		if(status == false)
+			
+			alertDialog.setIcon(R.drawable.fail);
+			alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
+					
 				
 			}
 		});
-
-		// Show Alert Message
-		alertDialog.show();
+			AlertDialog dialog = alertDialog.create();
+			dialog.show();
 	}
     
    private PowerManager.WakeLock wakeLock;

@@ -14,13 +14,14 @@
         android:contentDescription="@string/image_hint"
         android:src="@drawable/gcm_logo" /> -->
    
-     <TextView android:layout_width="fill_parent"
+     <TextView
+         android:layout_width="fill_parent"
          android:layout_height="wrap_content"
-         android:text="@string/number_hint"
          android:layout_marginLeft="10dip"
          android:layout_marginRight="10dip"
          android:layout_marginTop="20dip"
-         android:textColor="#000000"/>
+         android:text="@string/number_hint"
+         android:textColor="@color/Red" />
      
      <EditText android:id="@+id/txtNum" 
          android:layout_width="fill_parent"
@@ -29,13 +30,14 @@
         
          android:hint="@string/number_hint"/> 
          
-     <TextView android:layout_width="fill_parent"
+     <TextView
+         android:layout_width="fill_parent"
          android:layout_height="wrap_content"
-         android:text="@string/name_hint"
          android:layout_marginLeft="10dip"
          android:layout_marginRight="10dip"
          android:layout_marginTop="20dip"
-         android:textColor="#000000"/>
+         android:text="@string/name_hint"
+         android:textColor="@color/Red" />
      
      <EditText android:id="@+id/txtName" 
          android:layout_width="fill_parent"
@@ -44,12 +46,13 @@
         
          android:hint="@string/name_hint"/>
      
-     <TextView android:layout_width="fill_parent"
+     <TextView
+         android:layout_width="fill_parent"
          android:layout_height="wrap_content"
-         android:text="@string/email_hint"
          android:layout_marginLeft="10dip"
          android:layout_marginRight="10dip"
-         android:textColor="#000000"/>
+         android:text="@string/email_hint"
+         android:textColor="@color/Red" />
      
      <EditText
          android:id="@+id/txtEmail"

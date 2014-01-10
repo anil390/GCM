@@ -9,27 +9,26 @@ import android.widget.EditText;
 
 public class RegisterActivity extends Activity {
 	
-	// UI elements
 	EditText txtName; 
 	EditText txtEmail;
 	EditText txtPhone;
 	Controller aController;
-	
-	// Register button
 	Button btnRegister;
 	Boolean check = false;
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		aController = (Controller) getApplicationContext();
 		setContentView(R.layout.activity_register);
+		
+		
 			if (!aController.isConnectingToInternet()) {
 	
 					aController.showAlertDialog(RegisterActivity.this,
 					"Internet Connection Error",
 					"Please connect to working Internet connection", false);
-					// stop executing code by return
 					return;
 			}
 
@@ -37,36 +36,34 @@ public class RegisterActivity extends Activity {
 			txtEmail = (EditText) findViewById(R.id.txtEmail);
 			txtPhone = (EditText) findViewById(R.id.txtNum);
 			btnRegister = (Button) findViewById(R.id.btnRegister);
-
-			btnRegister.setOnClickListener(new View.OnClickListener() {
-	
-	@Override
-	public void onClick(View arg0) {  
-		String mphone_number = txtPhone.getText().toString();
-		
-		String mname = txtName.getText().toString(); 
-		String memail = txtEmail.getText().toString();
-	
-		
-		// Check if user filled the form
-				if(mphone_number.trim().length() > 0 && mname.trim().length() > 0 && memail.trim().length() > 0){
 			
-						// Launch Main Activity
-						Intent i = new Intent(getApplicationContext(), MainActivity.class);
-						i.putExtra("phone_number", mphone_number);
-						i.putExtra("name", mname);
-						i.putExtra("email", memail);
-						
-						startActivity(i);
-						finish();
 			
-				}else{
 			
-						// user doen't filled that data
-						aController.showAlertDialog(RegisterActivity.this, "Registration Error!", "Please enter your details", false);
-					}
-				}
-			});
+					btnRegister.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View arg0) {  
+							
+								String mphone_number = txtPhone.getText().toString();
+								String mname = txtName.getText().toString(); 
+								String memail = txtEmail.getText().toString();
+							
+								
+								// Check if user filled the form
+								if(mphone_number.trim().length() > 0 && mname.trim().length() > 0 && memail.trim().length() > 0){
+											Intent i = new Intent(getApplicationContext(), MainActivity.class);
+											i.putExtra("phone_number", mphone_number);
+											i.putExtra("name", mname);
+											i.putExtra("email", memail);
+											startActivity(i);
+											finish();
+					
+								}else{
+									
+									aController.showAlertDialog(RegisterActivity.this, "Registration Error!", "Please enter your details", false);
+							
+								}
+						}
+					});
 		}
 }
 		/*

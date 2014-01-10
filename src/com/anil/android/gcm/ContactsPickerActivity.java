@@ -11,7 +11,6 @@ public class ContactsPickerActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		String[] items = getlistcontacts();
 		
 		
 	}
