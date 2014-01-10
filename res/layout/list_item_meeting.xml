@@ -8,27 +8,25 @@
     android:layout_width="wrap_content"
     android:layout_weight=".4"
     android:layout_height="wrap_content"
-  	android:text="textview"
+  	android:text="date"
     />
     
     <TextView android:id="@+id/subjectTV"
     android:layout_width="wrap_content"
-    android:layout_weight=".2"
+    android:layout_weight=".4"
     android:layout_height="wrap_content"
     
-    android:text="textview"
+    android:text="subject"
     />
-    <TextView android:id="@+id/idTV"
-        android:layout_weight=".4"
+    
+     <TextView android:id="@+id/idTV"
     android:layout_width="wrap_content"
+    android:layout_weight=".2"
     android:layout_height="wrap_content"
-      android:text="textview"
-      android:layout_gravity="right"
-      android:visibility="invisible"
-    />
- 
-
- 
   
+    android:text="id"
+    />
+    
+      
  
 </LinearLayout>

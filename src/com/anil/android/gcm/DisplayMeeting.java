@@ -134,7 +134,7 @@ public class DisplayMeeting extends Activity {
                            convertView = vi.inflate(R.layout.list_item_meeting, null);
              
                           holder = new ViewHolder();
-                          holder.dId = (TextView) convertView.findViewById(R.id.idTV);
+                         // holder.dId = (TextView) convertView.findViewById(R.id.idTV);
                           holder.dSubject = (TextView) convertView.findViewById(R.id.subjectTV);
                           holder.dDate = (TextView) convertView.findViewById(R.id.dateTV);
                          
@@ -163,9 +163,9 @@ public class DisplayMeeting extends Activity {
              
                         ItemModel meet = meetingsList.get(position);
                         Log.d("check1","setting text");
-                        Integer tem = meet.getId();
+                        /*Integer tem = meet.getId();
                         String stemp = tem.toString();
-                        holder.dId.setText(stemp);
+                        holder.dId.setText(stemp);*/
                         holder.dSubject.setText(meet.getSubject());
                         holder.dDate.setText(meet.getDate());
                      return convertView;

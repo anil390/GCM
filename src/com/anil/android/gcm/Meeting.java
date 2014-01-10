@@ -10,7 +10,14 @@ public class Meeting {
 	private String subject;
 	private String date;
 	private String time;
+	private String invitee;
 	
+	public String getInvitee() {
+		return invitee;
+	}
+	public void setInvitee(String invitee) {
+		this.invitee = invitee;
+	}
 	public Meeting(){
 		
 	}

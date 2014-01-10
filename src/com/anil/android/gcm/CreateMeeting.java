@@ -13,7 +13,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
-import android.provider.ContactsContract.Contacts;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -52,6 +51,7 @@ public class CreateMeeting extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.create_meeting_activity);
+		
 		aController = (Controller) getApplicationContext();
 		 addButtonClickListener();
 	}
@@ -61,23 +61,7 @@ public class CreateMeeting extends Activity {
 	        btnTimePicker = (Button) findViewById(R.id.timePickerBT);
 	        btnDatePicker = (Button) findViewById(R.id.datePickerBT);
 	        btnMeetingCreated = (Button) findViewById(R.id.meetingCreated);
-	        contactPickerBT = (Button) findViewById(R.id.contact_picker);
-	       
-	        contactPickerBT.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					/*Intent i = new Intent(getApplicationContext(), ContactsPickerActivity.class);
-					startActivity(i);
-					*/
-					
-					    Intent contactPickerIntent = new Intent(Intent.ACTION_PICK,  
-					            Contacts.CONTENT_URI);  
-					    startActivityForResult(contactPickerIntent, CONTACT_PICKER_RESULT);  
-					
-					
-				}
-			});
+	    
 	        
 	        btnMeetingCreated.setOnClickListener(new OnClickListener() {
 				
@@ -85,13 +69,13 @@ public class CreateMeeting extends Activity {
 				public void onClick(View v) {
 					tLocationET = (EditText) findViewById(R.id.meetingLocationET);
 					/*tHostET = (EditText) findViewById(R.id.MeetingHostET);*/
-					//tinviteET = (EditText) findViewById(R.id.MeetingInviteET);
+					tinviteET = (EditText) findViewById(R.id.MeetingInviteET);
 					tDateET = (Button) findViewById(R.id.datePickerBT);
 					tTimeET = (Button) findViewById(R.id.timePickerBT);
 					 tSubjectET = (EditText) findViewById(R.id.subjectEt);
 					String tLocation = tLocationET.getText().toString();
 					//String tHost = tHostET.getText().toString();
-					//String tInvitee = tinviteET.getText().toString();
+					String tInvitee = tinviteET.getText().toString();
 					String tDate = tDateET.getText().toString();
 					String tTime = tTimeET.getText().toString();
 					String tSubject = tSubjectET.getText().toString();
@@ -109,6 +93,7 @@ public class CreateMeeting extends Activity {
 					//i.putExtra("invitee", tInvitee);
 					i.putExtra("date", tDate);
 					i.putExtra("time", tTime);
+					i.putExtra("invitee", tInvitee);
 					Log.d("Meeting", reg_id+host+tSubject+tLocation+tDate+tTime);
 					startActivity(i);
 					finish();
@@ -145,23 +130,26 @@ public class CreateMeeting extends Activity {
 	        protected Dialog onCreateDialog(int id) {
 	            switch (id) {
 	            case TIME_DIALOG_ID:
-	            	final Calendar c = Calendar.getInstance();
-	                int hour = c.get(Calendar.HOUR_OF_DAY);
-	                int minute = c.get(Calendar.MINUTE);
-
-	                return new TimePickerDialog(this, timePickerListener, hour, minute,
+	            	final Calendar c = Calendar.getInstance(); 
+            int hour=c.get(Calendar.HOUR_OF_DAY);
+            int minute=c.get(Calendar.MINUTE);
+            TimePickerDialog dialog2 = new TimePickerDialog(this, timePickerListener, month, day,
 	                        false);
+            dialog2.updateTime(hour, minute);
+            return dialog2;
 	     
 	         
 	            
 	        case DATE_DIALOG_ID:
-	        	 final Calendar c1 = Calendar.getInstance();
-	             int year = c1.get(Calendar.YEAR);
-	             int month = c1.get(Calendar.MONTH);
-	             int day = c1.get(Calendar.DAY_OF_MONTH);
+	            Calendar c1 = Calendar.getInstance();
+	            int mYear = c1.get(Calendar.YEAR);
+	            int mMonth = c1.get(Calendar.MONTH);
+	            int mDay = c1.get(Calendar.DAY_OF_MONTH);
 
-                // set time picker as current time
-                return new DatePickerDialog(this, datePickerListener, year, month, day);
+	            DatePickerDialog dialog1 =
+	                new DatePickerDialog(this, datePickerListener, mYear, mMonth, mDay);
+	            dialog1.updateDate(mYear, mMonth, mDay);
+	            return dialog1;
      
             }
 	            return null;
@@ -284,4 +272,21 @@ public class CreateMeeting extends Activity {
 	    } 
 	
 }
+/*   //contactPickerBT = (Button) findViewById(R.id.contact_picker);
+
+contactPickerBT.setOnClickListener(new OnClickListener() {
+	
+	@Override
+	public void onClick(View v) {
+		Intent i = new Intent(getApplicationContext(), ContactsPickerActivity.class);
+		startActivity(i);
+		
+		
+		    Intent contactPickerIntent = new Intent(Intent.ACTION_PICK,  
+		            Contacts.CONTENT_URI);  
+		    startActivityForResult(contactPickerIntent, CONTACT_PICKER_RESULT);  
+		
+		
+	}
+});*/
 

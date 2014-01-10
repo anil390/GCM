@@ -39,7 +39,7 @@ private final BroadcastReceiver mHandleMessageReceiver = new BroadcastReceiver()
 			String newMessage = intent.getExtras().getString(Config.EXTRA_MESSAGE);
 			
 			// Waking up mobile if it is sleeping
-			aController.acquireWakeLock(getApplicationContext());
+		//	aController.acquireWakeLock(getApplicationContext());
 			
 			// Display message on the screen
 			lblMessage1.append(newMessage + "\n");			
@@ -47,7 +47,7 @@ private final BroadcastReceiver mHandleMessageReceiver = new BroadcastReceiver()
 			Toast.makeText((Controller) getApplicationContext(), "Got Message: " + newMessage, Toast.LENGTH_LONG).show();
 			
 			// Releasing wake lock
-			aController.releaseWakeLock();
+			//aController.releaseWakeLock();
 		}
 	};
 	

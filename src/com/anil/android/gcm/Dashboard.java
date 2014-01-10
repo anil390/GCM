@@ -1,5 +1,7 @@
 package com.anil.android.gcm;
 
+import com.google.android.gcm.GCMRegistrar;
+
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -11,6 +13,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -32,12 +35,12 @@ public class Dashboard extends Activity {
 		aController = (Controller) getApplicationContext();
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 		String reg_id = sharedPreferences.getString("Registration_Id", null);
-		if (reg_id == null)
-		{
-			Intent i = new Intent(aController,RegisterActivity.class);
-			startActivity(i);
-			return ;
-		}		
+				if (reg_id == null)
+				{
+					Intent i = new Intent(aController,RegisterActivity.class);
+					startActivity(i);
+					return ;
+				}		
 		
 		setContentView(R.layout.dashboard);
 		ActionBar actionBar = getActionBar();
@@ -50,6 +53,9 @@ public class Dashboard extends Activity {
 		displayLocation = (Button) findViewById(R.id.displaylocationBT);
 		wellcomeTV = (TextView) findViewById(R.id.welcome);
 		wellcomeTV.setText("Welcome Again Anil !");
+		
+		//setting listeners------------------------------------
+		
 		createMeeting.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -57,26 +63,28 @@ public class Dashboard extends Activity {
 				Intent i = new Intent(getApplicationContext(),CreateMeeting.class);
 				startActivity(i);
 				
-			}
+				}
 		});
-		viewMeeting.setOnClickListener(new View.OnClickListener() {
+		
+				viewMeeting.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						Intent in = new Intent(getApplicationContext(),DisplayAllMeetings.class);
+						startActivity(in);
+						
+					}
+				});
+		
+				displayLocation.setOnClickListener(new View.OnClickListener() {
 			
-			@Override
-			public void onClick(View v) {
-				Intent in = new Intent(getApplicationContext(),DisplayMeeting.class);
-				startActivity(in);
+						@Override
+						public void onClick(View v) {
+							Intent in = new Intent(getApplicationContext(),DisplayMyLocation.class);
+							startActivity(in);
 				
-			}
-		});
-displayLocation.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent in = new Intent(getApplicationContext(),DisplayMyLocation.class);
-				startActivity(in);
-				
-			}
-		});
+						}
+				});
 		
 		
 		
@@ -89,25 +97,24 @@ displayLocation.setOnClickListener(new View.OnClickListener() {
 		public void onReceive(Context context, Intent intent) {
 			
 			String newMessage = intent.getExtras().getString(Config.EXTRA_MESSAGE);
-			
-			// Waking up mobile if it is sleeping
-			aController.acquireWakeLock(getApplicationContext());
-			
-			// Display message on the screen
-			//lblMessage.append(newMessage + "\n");			
-			
 			Toast.makeText(getApplicationContext(), "Got Message: " + newMessage, Toast.LENGTH_LONG).show();
 			
-			// Releasing wake lock
-			aController.releaseWakeLock();
 		}
 	};
 
 	@Override
 	protected void onDestroy() {
-		super.onDestroy();
+			try {
+			
+				unregisterReceiver(mHandleMessageReceiver);
+				GCMRegistrar.onDestroy(this);
+			
+			} catch (Exception e) {
+			Log.e("UnRegister Receiver Error", "> " + e.getMessage());
+			}
+			super.onDestroy();
 		
-	}
+		}
 	
 	 @Override
 	    public boolean onCreateOptionsMenu(Menu menu) {

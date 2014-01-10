@@ -1,12 +1,11 @@
 package com.anil.android.gcm;
 
  import android.app.AlarmManager;
-    import android.app.PendingIntent;
-    import android.content.BroadcastReceiver;
-    import android.content.Context;
-    import android.content.Intent;
-    import android.os.PowerManager;
-    import android.widget.Toast;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.widget.Toast;
 
     public class Alarm extends BroadcastReceiver 
     {    
@@ -14,14 +13,14 @@ package com.anil.android.gcm;
          @Override
          public void onReceive(Context context, Intent intent) 
          {   
-             PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-             PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
-             wl.acquire();
+             //PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+            // PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
+            // wl.acquire();
              
              // Put here YOUR code.
              Toast.makeText(context, "Meeting in 50 minuts  !!!!!!!!!!", Toast.LENGTH_LONG).show(); // For example
 
-             wl.release();
+            // wl.release();
          }
 
      public void SetAlarm(Context context)

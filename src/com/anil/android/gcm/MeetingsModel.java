@@ -17,7 +17,7 @@ import android.util.Log;
 	  private SQLiteDatabase database;
 	  private MySQLiteHelper dbHelper;
 	  private String[] allColumns = { MySQLiteHelper.COLUMN_ID,
-	      MySQLiteHelper.COLUMN_ID, MySQLiteHelper.COLUMN_GCM_REG_ID, MySQLiteHelper.COLUMN_SUBJECT, MySQLiteHelper.COLUMN_DATE, MySQLiteHelper.COLUMN_TIME};
+	      MySQLiteHelper.COLUMN_ID, MySQLiteHelper.COLUMN_GCM_REG_ID, MySQLiteHelper.COLUMN_SUBJECT, MySQLiteHelper.COLUMN_DATE, MySQLiteHelper.COLUMN_TIME,MySQLiteHelper.COLUMN_INVITEE};
 
 	  public MeetingsModel(Context context) {
 	    dbHelper = new MySQLiteHelper(context);
@@ -33,7 +33,7 @@ import android.util.Log;
 	    dbHelper.close();
 	  }
 
-	  public Meeting createMeeting(String gcm_reg_id, String subject, String location, String date, String time) {
+	  public Meeting createMeeting(String gcm_reg_id, String subject, String location, String date, String time, String invitee) {
 		  Log.v("SQLIte helper","meeting created started");
 		  ContentValues values = new ContentValues();
 	    values.put(MySQLiteHelper.COLUMN_GCM_REG_ID, gcm_reg_id);
@@ -41,6 +41,7 @@ import android.util.Log;
 	    values.put(MySQLiteHelper.COLUMN_LOCATION, location);
 	    values.put(MySQLiteHelper.COLUMN_DATE, date);
 	    values.put(MySQLiteHelper.COLUMN_TIME, time);
+	    values.put(MySQLiteHelper.COLUMN_INVITEE, invitee);
 	   
 	    long insertId = database.insert(MySQLiteHelper.TABLE_MEETINGS, null,
 	        values);
@@ -60,8 +61,8 @@ import android.util.Log;
 	        + " = " + id, null);
 	  }
 
-	  public List<Meeting> getAllMeetings() {
-	    List<Meeting> meetings = new ArrayList<Meeting>();
+	  public ArrayList<Meeting> getAllMeetings() {
+	    ArrayList<Meeting> meetings = new ArrayList<Meeting>();
 
 	    Cursor cursor = database.query(MySQLiteHelper.TABLE_MEETINGS,
 	        allColumns, null, null, null, null, null);
@@ -85,6 +86,7 @@ import android.util.Log;
 	    meeting.setLocation(cursor.getString(3));
 	    meeting.setDate(cursor.getString(4));
 	    meeting.setTime(cursor.getString(5));
+	    meeting.setInvitee(cursor.getString(6));
 	    
 	    return meeting;
 	  }

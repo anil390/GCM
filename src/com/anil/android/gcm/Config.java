@@ -7,7 +7,7 @@ public interface Config {
 	static final String MEETING_CREATE_LOCATION = "http://www.abcd.co.in/gcmdemo/meetingcreation.php";
 
 	
-	 static final  String DB_PATH = "/data/data/com.anil.android.gcm/databases/";
+	// static final  String DB_PATH = "/data/data/com.anil.android.gcm/databases/";
 	 
 	 static final String DB_NAME = "gcm_demo.db";
     // Google project id

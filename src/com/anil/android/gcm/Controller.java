@@ -22,7 +22,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -42,10 +41,11 @@ public class Controller extends Application{
     private  final int BACKOFF_MILLI_SECONDS = 2000;
     private  final Random random = new Random();
 	//creating meeting
-    void createMeeting(final Context context, String reg_Id,  String host, String location, String subject, String date, String time){
+    void createMeeting(final Context context, String reg_Id,  String host, String location, String subject, String date, String time, String invitee){
     
     	Log.d("Controller ", reg_Id);
     	 Map<String, String> params = new HashMap<String, String>();
+    	 params.put("invitee", invitee);
     	 params.put("time", time);
     	 params.put("date", date);
     	 params.put("subject", subject);
@@ -102,10 +102,7 @@ public class Controller extends Application{
                 post("http://www.abcd.co.in/gcmdemo/register.php", params);
                 
                 GCMRegistrar.setRegisteredOnServer(context, true);
-                
-                //Send Broadcast to Show message on screen
-                String message = context.getString(R.string.server_registered);
-                displayMessageOnScreen(context, message);
+              
                 
                 return;
             } catch (IOException e) {
@@ -130,8 +127,7 @@ public class Controller extends Application{
                     Thread.currentThread().interrupt();
                     return;
                 }
-                
-                // increase backoff exponentially
+               
                 backoff *= 2;
             }
         }
@@ -207,9 +203,7 @@ public class Controller extends Application{
         
         HttpURLConnection conn = null;
         try {
-        	
-        	
-        	Log.d("URL", "> " + url);
+        
         	
             conn = (HttpURLConnection) url.openConnection();
             conn.setDoOutput(true);
@@ -218,8 +212,7 @@ public class Controller extends Application{
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type",
                     "application/x-www-form-urlencoded;charset=UTF-8");
-            // post the request
-            Log.d("posting", "posting entity");
+            
             OutputStream out = conn.getOutputStream();
             out.write(bytes);
             out.close();
@@ -295,25 +288,7 @@ public void showAlertDialog(Context context, String title, String message,
 			AlertDialog dialog = alertDialog.create();
 			dialog.show();
 	}
-    
-   private PowerManager.WakeLock wakeLock;
-    
-    @SuppressWarnings("deprecation")
-	public  void acquireWakeLock(Context context) {
-        if (wakeLock != null) wakeLock.release();
-
-        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-        
-        wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK |
-                PowerManager.ACQUIRE_CAUSES_WAKEUP |
-                PowerManager.ON_AFTER_RELEASE, "WakeLock");
-        
-        wakeLock.acquire();
-    }
-
-    public  void releaseWakeLock() {
-        if (wakeLock != null) wakeLock.release(); wakeLock = null;
-    }
+ 
 
 	@Override
 	public void onCreate() {
@@ -322,9 +297,9 @@ public void showAlertDialog(Context context, String title, String message,
 		
 		registerReceiver(mHandleMessageReceiver, new IntentFilter(
 				Config.DISPLAY_MESSAGE_ACTION));
-		Intent inte = new Intent(this, UploadingService.class);
-		startService(inte);
-		Log.d("service", "service started");
+		//Intent inte = new Intent(this, UploadingService.class);
+		//startService(inte);
+		//Log.d("service", "service started");
 	}
 	
 	
@@ -337,35 +312,28 @@ public void showAlertDialog(Context context, String title, String message,
 			
 			String newMessage = intent.getExtras().getString(Config.EXTRA_MESSAGE);
 			
-			// Waking up mobile if it is sleeping
-			aController.acquireWakeLock(getApplicationContext());
-			
-			// Display message on the screen
-			//lblMessage.append(newMessage + "\n");			
+			//aController.acquireWakeLock(getApplicationContext());
 			
 			Toast.makeText(getApplicationContext(), "Got Message: " + newMessage, Toast.LENGTH_LONG).show();
 			
 			// Releasing wake lock
-			aController.releaseWakeLock();
+			//aController.releaseWakeLock();
 		}
 	};
 	
+	
+	
 	protected void onDestroy() {
-		// Cancel AsyncTask
-		/*if (mRegisterTask != null) {
-			mRegisterTask.cancel(true);
-		}*/
+		
 		try {
-			// Unregister Broadcast Receiver
-			unregisterReceiver(mHandleMessageReceiver);
 			
-			//Clear internal resources.
+			unregisterReceiver(mHandleMessageReceiver);
 			GCMRegistrar.onDestroy(this);
 			
 		} catch (Exception e) {
 			Log.e("UnRegister Receiver Error", "> " + e.getMessage());
 		}
-	//	super.onDestroy();
+	
 	}
 
     
