@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:background="#FFFFFF"
     android:orientation="vertical" >
 
     <TextView
@@ -12,17 +12,18 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="30dip"
         android:text="Welcome Again !"
-        android:textSize="30dip" />
+        android:textColor="#000000"
+        android:textSize="20dip" />
 
     <Button
         android:id="@+id/createMeetingBT"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="30dip"
-        android:background="#333366"
-        android:layout_marginLeft="50dip"
-        android:layout_marginRight="50dip"
+       android:textSize="30dip"
+        android:background="@drawable/dark_button"
+        android:layout_margin="30dip"
+         style= "@style/button_text"
         android:text="@string/create_meeting_text" />
 
     <Button
@@ -31,19 +32,19 @@
         android:layout_height="wrap_content"
          android:layout_gravity="center_horizontal"
         android:text="View Meetings"
-        android:layout_marginLeft="50dip"
-        android:layout_marginBottom="30dip"
-        android:layout_marginRight="50dip"
-           android:background="#993366"/>
+        android:textSize="30dip"
+        android:background="@drawable/dark_button"
+        android:layout_margin="30dip"
+         style= "@style/button_text"/>
      <Button
         android:id="@+id/displaylocationBT"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        
-        android:background="#333366"
-        android:layout_marginLeft="50dip"
-        android:layout_marginRight="50dip"
+       android:textSize="30dip"
+        android:background="@drawable/dark_button"
+        android:layout_margin="30dip"
+         style= "@style/button_text"
         android:text="Display My Location" />
     
 

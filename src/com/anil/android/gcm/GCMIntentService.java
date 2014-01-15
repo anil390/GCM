@@ -1,5 +1,6 @@
 package com.anil.android.gcm;
 
+
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -133,7 +134,7 @@ public class GCMIntentService extends GCMBaseIntentService {
          resultIntent.putExtra("message", message);
          resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+         TaskStackBuilder stackBuilder = TaskStackBuilder.create(aController);
          stackBuilder.addParentStack(CreateMeeting.class);
 
          /* Adds the Intent that starts the Activity to the top of the stack */

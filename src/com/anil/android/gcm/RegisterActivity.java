@@ -9,9 +9,9 @@ import android.widget.EditText;
 
 public class RegisterActivity extends Activity {
 	
-	EditText txtName; 
-	EditText txtEmail;
-	EditText txtPhone;
+	EditText nameET; 
+	EditText emailET;
+	EditText phoneET;
 	Controller aController;
 	Button btnRegister;
 	Boolean check = false;
@@ -32,9 +32,9 @@ public class RegisterActivity extends Activity {
 					return;
 			}
 
-			txtName = (EditText) findViewById(R.id.txtName);
-			txtEmail = (EditText) findViewById(R.id.txtEmail);
-			txtPhone = (EditText) findViewById(R.id.txtNum);
+			nameET = (EditText) findViewById(R.id.nameET);
+			emailET = (EditText) findViewById(R.id.emailET);
+			phoneET = (EditText) findViewById(R.id.phoneET);
 			btnRegister = (Button) findViewById(R.id.btnRegister);
 			
 			
@@ -43,9 +43,9 @@ public class RegisterActivity extends Activity {
 						@Override
 						public void onClick(View arg0) {  
 							
-								String mphone_number = txtPhone.getText().toString();
-								String mname = txtName.getText().toString(); 
-								String memail = txtEmail.getText().toString();
+								String mphone_number = phoneET.getText().toString();
+								String mname = nameET.getText().toString(); 
+								String memail = emailET.getText().toString();
 							
 								
 								// Check if user filled the form

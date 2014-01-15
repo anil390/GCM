@@ -1,5 +1,26 @@
-<resources>
-
-    <style name="AppTheme" parent="android:Theme.Light" />
-
+<?xml version="1.0" encoding="utf-8" ?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+  <style name="button_text" >
+    <item name="android:layout_width" >fill_parent</item>
+    <item name="android:layout_height" >wrap_content</item>
+    <item name="android:textColor" >#ffffff</item>
+    <item name="android:gravity" >center</item>
+    <item name="android:layout_margin" >3dp</item>
+    <item name="android:textSize" >30sp</item>
+    <item name="android:textStyle" >bold</item>
+    <item name="android:shadowColor" >#ffffff</item>
+    <item name="android:shadowDx" >1</item>
+    <item name="android:shadowDy" >1</item>
+    <item name="android:shadowRadius" >2</item>
+  </style>
+  <style name = "MyActionBar">
+      
+      <item name = "android:background" >#FFBB33</item>
+      
+  </style>
+   <style name = "MyActionBar1">
+      
+      <item name = "android:background" >#FFBB33</item>
+      
+  </style>
 </resources>
