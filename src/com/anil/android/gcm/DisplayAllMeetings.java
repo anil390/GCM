@@ -4,11 +4,14 @@ import java.util.ArrayList;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -35,22 +38,21 @@ public class DisplayAllMeetings extends ListActivity {
       
         Log.d("adapter","defore adapter");
         listView.setAdapter(dataAdapter);
-      /*  listView.setOnItemClickListener(new OnItemClickListener()
+        listView.setOnItemClickListener(new OnItemClickListener()
         {
 
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                 {
                 	 Meeting m = (Meeting) parent.getItemAtPosition(position);
                 	Intent singleMeeting = new Intent(getApplicationContext(),SingleMeeting.class);
-                    int tempId = m.getId();
+                    String tempId = m.getGcm_reg_id();
                     
-                    String tempStr =  Integer.toString(tempId);
-                	singleMeeting.putExtra("ID", tempStr) ; 
+                	singleMeeting.putExtra("ID", tempId) ; 
                     Log.v("on display","before displaying single activity");
                     startActivity(singleMeeting);
                 	
                 }
-        });*/
+        });
         
 
 	    /*ArrayAdapter<Meeting> adapter = new ArrayAdapter<Meeting>(this,
@@ -136,7 +138,7 @@ public class DisplayAllMeetings extends ListActivity {
                   Log.d("check1","setting text");
                   //Integer tem = meet.getId();
                   //String stemp = tem.toString();
-                 // holder.dId.setText(meet.getId());
+                  holder.dId.setText(meet.getGcm_reg_id());
                   holder.dSubject.setText(meet.getLocation());
                   holder.dDate.setText(meet.getDate());
                return convertView;

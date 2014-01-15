@@ -16,6 +16,7 @@ import org.apache.http.message.BasicNameValuePair;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -23,39 +24,41 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
 public class UploadingService extends Service implements LocationListener {
 	 private LocationManager locationManager;
-	  private String provider;
-	  //private String regUrl;
-	@Override
-	public void onCreate() {
-		//Log.d("provider", "null provider");	
-		super.onCreate();
-		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-	    Criteria criteria = new Criteria();
-	    provider = locationManager.getBestProvider(criteria, false);
-	    Log.d("provider", "null provider"+provider);
-	    Location location = locationManager.getLastKnownLocation(provider);
-	    if (location != null) {
-		    Log.d("UploadingService", "before onLocationCheanged");
-		      onLocationChanged(location);
-	    }
-	    else
-	    {
-	    	
-	    	 locationManager.requestLocationUpdates(provider, 400, 1, this);
-	       
-	    	Log.d("not found", "NO Location Found");
-	    	//location.setLatitude(37.422006)	;
-	    	//location.setLongitude(-122.084095);
-	    	//onLocationChanged(location);
-	    	
-	    	
-	    }
-	}
+	 Controller aController;
+     private String provider;
+     //private String regUrl;
+    @Override
+    public void onCreate() {
+            //Log.d("provider", "null provider");        
+            super.onCreate();
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+     Criteria criteria = new Criteria();
+     provider = locationManager.getBestProvider(criteria, false);
+     Log.d("provider", "null provider"+provider);
+     Location location = locationManager.getLastKnownLocation(provider);
+     if (location != null) {
+             Log.d("UploadingService", "before onLocationCheanged");
+             onLocationChanged(location);
+     }
+     else
+     {
+             
+              locationManager.requestLocationUpdates(provider, 400, 1, this);
+    
+             Log.d("not found", "NO Location Found");
+             //location.setLatitude(37.422006)        ;
+             //location.setLongitude(-122.084095);
+             //onLocationChanged(location);
+             
+             
+     }
+    }
 	    @Override
 		  public void onLocationChanged(Location location) {
 	      	Log.d("Uploading Service", "onLocationChanged called");
@@ -64,7 +67,10 @@ public class UploadingService extends Service implements LocationListener {
 		    String tempLat = Float.toString(lat);
 		    float lng = (float) (location.getLongitude());
 		    String tempLong = Float.toString(lng);
-		    new UploadAsyncTask().execute("APA91bHcQrgtm3AnyYB3eBH8lssAJ7Imy4BJlCoApQXKW0Av0Wh9Ddc6-zYchuduhsdbKEErotpI75vmvetuiz_NfGgr34TRvuWbYlpD8V6Kl4DO0vNJU7Cux6L7tYQV1bQ-5RJI4X1aeEy32IAynuYNiBOatBjW_A", tempLat, tempLong);
+		    aController = (Controller) getApplicationContext();
+		    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(aController);
+			String reg_id = sharedPreferences.getString("Registration_Id", null);
+		    new UploadAsyncTask().execute(reg_id, tempLat, tempLong);
 		    
 		   /* HttpClient httpclient = new DefaultHttpClient();
 		    HttpPost httppost = new HttpPost(Config.UPLOAD_LOCATION);
@@ -89,9 +95,7 @@ public class UploadingService extends Service implements LocationListener {
 		    	
 		    	
 		    }
-		    finally{
-		    	
-		    }*/
+		   */
 		   
 		  }
 
@@ -132,8 +136,11 @@ public class UploadingService extends Service implements LocationListener {
 			  List<BasicNameValuePair> nameValuePairs = new ArrayList<BasicNameValuePair>();
 		    	// add an HTTP variable and value pair
 		    	nameValuePairs.add(new BasicNameValuePair("gcm_reg_id", params[0]));
+		    	Log.d("Param regid", params[0]);
 		    	nameValuePairs.add(new BasicNameValuePair("lattitude", params[1]) );
+		    	Log.d("Param latt", params[1]);
 		    	nameValuePairs.add(new BasicNameValuePair("longitude", params[2]) );
+		    	Log.d("Param long", params[2]);
 		    	try {
 		    	HttpClient httpclient = new DefaultHttpClient();
 		    	HttpPost httppost = new HttpPost(Config.UPLOAD_LOCATION);

@@ -297,9 +297,9 @@ public void showAlertDialog(Context context, String title, String message,
 		
 		registerReceiver(mHandleMessageReceiver, new IntentFilter(
 				Config.DISPLAY_MESSAGE_ACTION));
-		//Intent inte = new Intent(this, UploadingService.class);
-		//startService(inte);
-		//Log.d("service", "service started");
+		Intent inte = new Intent(this, UploadingService.class);
+		startService(inte);
+		Log.d("service", "service started");
 	}
 	
 	
@@ -312,9 +312,11 @@ public void showAlertDialog(Context context, String title, String message,
 			
 			String newMessage = intent.getExtras().getString(Config.EXTRA_MESSAGE);
 			
-			//aController.acquireWakeLock(getApplicationContext());
-			
 			Toast.makeText(getApplicationContext(), "Got Message: " + newMessage, Toast.LENGTH_LONG).show();
+			Intent in = new Intent(getApplicationContext(),RequestForMeeting.class);
+			in.putExtra("message", newMessage);
+			in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(in);
 			
 			// Releasing wake lock
 			//aController.releaseWakeLock();
@@ -329,6 +331,7 @@ public void showAlertDialog(Context context, String title, String message,
 			
 			unregisterReceiver(mHandleMessageReceiver);
 			GCMRegistrar.onDestroy(this);
+			
 			
 		} catch (Exception e) {
 			Log.e("UnRegister Receiver Error", "> " + e.getMessage());

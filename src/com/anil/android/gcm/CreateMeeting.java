@@ -38,19 +38,24 @@ public class CreateMeeting extends Activity {
 	    public Button contactPickerBT;
 	    public EditText tSubjectET;
 	   
-	    
-	    private int hour;
-	    private int minute;
 	    private int month;
 	    private int day;
 	    private int tempyear;
 	    String host;
 	   String reg_id;
-	   
+	   private int mYear, mMonth, mDay,mHour,mMinute;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.create_meeting_activity);
+		   final Calendar c = Calendar.getInstance();
+           mYear = c.get(Calendar.YEAR);
+           mMonth = c.get(Calendar.MONTH);
+           mDay = c.get(Calendar.DAY_OF_MONTH);
+           mHour = c.get(Calendar.HOUR_OF_DAY);
+           mMinute = c.get(Calendar.MINUTE);
+           
+           
 		
 		aController = (Controller) getApplicationContext();
 		 addButtonClickListener();
@@ -72,6 +77,7 @@ public class CreateMeeting extends Activity {
 					tinviteET = (EditText) findViewById(R.id.MeetingInviteET);
 					tDateET = (Button) findViewById(R.id.datePickerBT);
 					tTimeET = (Button) findViewById(R.id.timePickerBT);
+					
 					 tSubjectET = (EditText) findViewById(R.id.subjectEt);
 					String tLocation = tLocationET.getText().toString();
 					//String tHost = tHostET.getText().toString();
@@ -107,9 +113,12 @@ public class CreateMeeting extends Activity {
 	 
 	            @Override
 	            public void onClick(View v) {
-	            	final TimePickerDialog dialog = new TimePickerDialog(CreateMeeting.this, timePickerListener, hour, minute,
+	            	
+	            	final TimePickerDialog dialog = new TimePickerDialog(CreateMeeting.this, timePickerListener, 0, 0,
 	                        false);
+	            	
 	            	dialog.show();
+	            	
 	            	}
 	 
 	        });
@@ -117,7 +126,8 @@ public class CreateMeeting extends Activity {
 	       	 
 	            @Override
 	            public void onClick(View v) {
-	            	final DatePickerDialog dialog1 = new DatePickerDialog(CreateMeeting.this, datePickerListener, tempyear, month, day);
+	            	
+	            	final DatePickerDialog dialog1 = new DatePickerDialog(CreateMeeting.this, datePickerListener, mYear, mMonth, mDay);
 	            	dialog1.show();
 	            	}
 	 
@@ -130,25 +140,20 @@ public class CreateMeeting extends Activity {
 	        protected Dialog onCreateDialog(int id) {
 	            switch (id) {
 	            case TIME_DIALOG_ID:
-	            	final Calendar c = Calendar.getInstance(); 
-            int hour=c.get(Calendar.HOUR_OF_DAY);
-            int minute=c.get(Calendar.MINUTE);
-            TimePickerDialog dialog2 = new TimePickerDialog(this, timePickerListener, month, day,
+	            	
+	            	
+	            	TimePickerDialog dialog2 = new TimePickerDialog(this, timePickerListener, mHour, mMinute,
 	                        false);
-            dialog2.updateTime(hour, minute);
+	            	
             return dialog2;
 	     
 	         
 	            
 	        case DATE_DIALOG_ID:
-	            Calendar c1 = Calendar.getInstance();
-	            int mYear = c1.get(Calendar.YEAR);
-	            int mMonth = c1.get(Calendar.MONTH);
-	            int mDay = c1.get(Calendar.DAY_OF_MONTH);
-
+	          
 	            DatePickerDialog dialog1 =
 	                new DatePickerDialog(this, datePickerListener, mYear, mMonth, mDay);
-	            dialog1.updateDate(mYear, mMonth, mDay);
+	           
 	            return dialog1;
      
             }
@@ -161,8 +166,8 @@ public class CreateMeeting extends Activity {
 		  
 	        @Override
 	        public void onTimeSet(TimePicker view, int hourOfDay, int minutes) {
-	            hour   = hourOfDay;
-	            minute = minutes;
+	           int  hour   = hourOfDay;
+	            int minute = minutes;
 	 
 	            // set current time into output textview
 	            btnTimePicker.setText(new StringBuilder().append(utilTime(hour))
@@ -178,11 +183,11 @@ public class CreateMeeting extends Activity {
 			@Override
 			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 					day = dayOfMonth;
-					month = monthOfYear;
+					month = monthOfYear + 1;
 					tempyear = year;
 				
-				 btnDatePicker.setText(new StringBuilder().append(utilTime(tempyear))
-		                    .append("-").append(utilTime(month)).append("-").append(utilTime(day)));
+				 btnDatePicker.setText(new StringBuilder().append(utilTime(day))
+		                    .append("-").append(utilTime(month)).append("-").append(utilTime(tempyear)));
 				
 			}
 	 

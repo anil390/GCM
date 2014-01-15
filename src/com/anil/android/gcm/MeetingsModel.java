@@ -2,7 +2,6 @@
 package com.anil.android.gcm;
 
 	import java.util.ArrayList;
-import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -60,6 +59,8 @@ import android.util.Log;
 	    database.delete(MySQLiteHelper.TABLE_MEETINGS, MySQLiteHelper.COLUMN_ID
 	        + " = " + id, null);
 	  }
+	  
+	
 
 	  public ArrayList<Meeting> getAllMeetings() {
 	    ArrayList<Meeting> meetings = new ArrayList<Meeting>();
@@ -89,5 +90,19 @@ import android.util.Log;
 	    meeting.setInvitee(cursor.getString(6));
 	    
 	    return meeting;
+	  }
+	  
+	  
+	  public Meeting fetchMeeting(String id){
+		  
+		  
+		  Log.v("fetching","fetching method called");
+		  Cursor cursor = database.rawQuery("select * from meetings where _id = ?", new String[] { id }); 
+		  cursor.moveToFirst();
+		    Meeting newMeeting = cursorToMeeting(cursor);
+		    cursor.close();
+		    return newMeeting;
+	
+		  
 	  }
 	} 

@@ -40,16 +40,29 @@ public class MeetingCreated extends Activity {
 		  datasource.open();
 		  Meeting  test1 = datasource.createMeeting(mreg_id, mSubject, mlocation, mdate, mtime,minvitee);
 		  Log.v("Success","meeting created successfully");
+		  
+		  // get a Calendar object with current time
+		
 		 // Date saved in SQLite   
 		    
+		  
+		/*  Date date = null;
+		try {
+			date = new SimpleDateFormat("dd mm yyyy").parse(mdate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  long milliseconds = date.getTime();
+		  long millisecondsFromNow = milliseconds - (new Date()).getTime();
+		  Toast.makeText(this, "Milliseconds to future date="+millisecondsFromNow, Toast.LENGTH_SHORT).show(); */ 
 		    
-		    
-		/*  //Setting Alarm  
-		 AlarmManager am=(AlarmManager)getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+		 //Setting Alarm  
+/*		 AlarmManager am=(AlarmManager)getApplicationContext().getSystemService(Context.ALARM_SERVICE);
          Intent in = new Intent(getApplicationContext(), Alarm.class);
          PendingIntent pi = PendingIntent.getBroadcast(getApplicationContext(), 0, in, 0);
-         am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 60 * 1, pi); 
-       */
+         am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), millisecondsFromNow, pi); */
+       
          
          
 		final Context context = this;

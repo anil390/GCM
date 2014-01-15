@@ -61,7 +61,7 @@
         
 					    <TextView
 					        android:id="@+id/textView3"
-					        android:layout_weight="1"
+					        android:layout_weight=".5"
 					        android:layout_width="wrap_content"
 					        android:layout_height="wrap_content"
 					      
@@ -69,7 +69,7 @@
 					
 					    <Button
 					        android:id="@+id/datePickerBT"
-					        android:layout_weight="1"
+					        android:layout_weight=".5"
 					        android:layout_width="wrap_content"
 					        android:layout_height="wrap_content"
 					        android:text="@string/meeting_date_hint"
@@ -84,7 +84,7 @@
         
 					    <TextView
 					        android:id="@+id/textView4"
-					        android:layout_weight="1"
+					        android:layout_weight=".5"
 					        android:layout_width="wrap_content"
 					        android:layout_height="wrap_content"
 					      
@@ -92,7 +92,7 @@
 					
 					    <Button
 					        android:id="@+id/timePickerBT"
-					        android:layout_weight="1"
+					        android:layout_weight=".5"
 					        android:layout_width="wrap_content"
 					        android:layout_height="wrap_content"
 					        android:text="@string/meeting_time_hint"
@@ -108,8 +108,8 @@
         
 					    <TextView
 					        android:id="@+id/meetingInvitee"
-					        android:layout_weight="0"
-					        android:layout_width="wrap_content"
+					        android:layout_weight=".5"
+					        android:layout_width="fill_parent"
 					        android:layout_height="wrap_content"
 					      
 					        android:text="@string/meeting_invite" />
@@ -123,8 +123,8 @@
 					
 					     <EditText
 				        android:id="@+id/MeetingInviteET"
-				        android:layout_weight="1"
-				        android:layout_width="wrap_content"
+				        android:layout_weight=".5"
+				        android:layout_width="fill_parent"
 				        android:layout_height="wrap_content"
 				        android:hint="@string/meeting_invite_hint" >
 				
@@ -150,7 +150,7 @@
 
             <Button
                 android:id="@+id/meetingCreated"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center"
                 android:gravity="bottom|center_horizontal"

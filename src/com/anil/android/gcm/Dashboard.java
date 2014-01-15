@@ -1,7 +1,5 @@
 package com.anil.android.gcm;
 
-import com.google.android.gcm.GCMRegistrar;
-
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -20,6 +18,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gcm.GCMRegistrar;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class Dashboard extends Activity {
@@ -43,9 +43,11 @@ public class Dashboard extends Activity {
 				}		
 		
 		setContentView(R.layout.dashboard);
+		
+		  
 		ActionBar actionBar = getActionBar();
-		registerReceiver(mHandleMessageReceiver, new IntentFilter(
-				Config.DISPLAY_MESSAGE_ACTION));
+		//registerReceiver(mHandleMessageReceiver, new IntentFilter(
+			//	Config.DISPLAY_MESSAGE_ACTION));
 		
         actionBar.setDisplayHomeAsUpEnabled(true);
 		createMeeting = (Button) findViewById(R.id.createMeetingBT);
@@ -97,7 +99,7 @@ public class Dashboard extends Activity {
 		public void onReceive(Context context, Intent intent) {
 			
 			String newMessage = intent.getExtras().getString(Config.EXTRA_MESSAGE);
-			Toast.makeText(getApplicationContext(), "Got Message: " + newMessage, Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), "Got new Message: " + newMessage, Toast.LENGTH_LONG).show();
 			
 		}
 	};

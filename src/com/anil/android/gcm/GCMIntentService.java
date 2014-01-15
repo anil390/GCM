@@ -17,7 +17,6 @@ public class GCMIntentService extends GCMBaseIntentService {
 	private Controller aController = null;
 
     public GCMIntentService() {
-    	// Call extended class Constructor GCMBaseIntentService
         super(Config.GOOGLE_SENDER_ID);
     }
 
@@ -32,7 +31,7 @@ public class GCMIntentService extends GCMBaseIntentService {
            aController = (Controller) getApplicationContext();
     		
         Log.i(TAG, "Device registered: regId = " + registrationId);
-        aController.displayMessageOnScreen(context, "Your device registred with GCM");
+       // aController.displayMessageOnScreen(context, "Your device registred with GCM");
         Log.d("NAME", MainActivity.tname);
         aController.register(context,MainActivity.tphone_number, MainActivity.tname, MainActivity.temail, registrationId);
     }
@@ -59,7 +58,7 @@ public class GCMIntentService extends GCMBaseIntentService {
         if(aController == null)
             aController = (Controller) getApplicationContext();
          
-        Log.i(TAG, "Received message");
+        Log.v(TAG, "Received message");
         String message = intent.getExtras().getString("price");
          
         aController.displayMessageOnScreen(context, message);
@@ -130,7 +129,8 @@ public class GCMIntentService extends GCMBaseIntentService {
         
          
          /* Creates an explicit intent for an Activity in your app */
-         Intent resultIntent = new Intent(aController, CreateMeeting.class);
+         Intent resultIntent = new Intent(aController, RequestForMeeting.class);
+         resultIntent.putExtra("message", message);
          resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
          TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
